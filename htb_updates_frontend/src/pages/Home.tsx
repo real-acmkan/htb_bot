@@ -14,15 +14,6 @@ const Home = () => {
     return (
         <Container>
             <Grid textAlign="center">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    sx={{ position: "fixed", top: 0, right: 0, borderRadius: 0, borderBottomLeftRadius: 20, paddingX: 6, paddingY: 2 }}
-                    component={RouterLink}
-                    to={"https://discord.com/api/oauth2/authorize?client_id=806824180074938419&redirect_uri=https%3A%2F%2Fhtbupdates.com%2Fcallback&response_type=code&scope=identify&state=" + state}
-                >
-                    <LoginIcon sx={{marginRight: 1}} /> Login
-                </Button>
                 <img height={100} src="/htb.png"></img>
                 <Typography variant="h4" fontWeight="bold" marginBottom={2}>HTB Updates</Typography>
                 <Divider />
@@ -45,7 +36,7 @@ const Home = () => {
                     <Grid item md={6} xs={12} padding={3}>
                         <Typography variant="h6" fontWeight="bold" marginBottom={2}>1. Invite the bot to your server</Typography>
                         <Divider />
-                        <Typography variant="body2" marginTop={2} marginBottom={4}><Link color="inherit" sx={{ textUnderlineOffset: 5 }}>Click here</Link> to invite the bot to your server.</Typography>
+                        <Typography variant="body2" marginTop={2} marginBottom={4}>Use the link <Link color="inherit" sx={{ textUnderlineOffset: 5 }}>https://discord.com/api/oauth2/authorize?client_id=YOUR_ID&permissions=277025441856&scope=bot+applications.commands</Link> to invite the bot to your server.</Typography>
                         <Typography variant="h6" fontWeight="bold" marginBottom={2}>2. Setup the bot</Typography>
                         <Divider />
                         <Typography variant="body2" marginTop={2} marginBottom={4}>Create the channel you would like the bot to send announcements to and then send the message h.setup in it.</Typography>
@@ -65,12 +56,11 @@ const Home = () => {
                     <Grid item md={6} xs={12} padding={3}>
                         <Typography variant="h5" fontWeight="bold">Open Source</Typography>
                         <Typography variant="body2" marginTop={2} marginBottom={2}>Did you know? This bot is open source.</Typography>
-                        <Button variant="outlined" color="info" startIcon={<i className="fab fa-github"></i>}>View On Github</Button>
+                        <Button variant="outlined" color="info" startIcon={<i className="fab fa-github"></i>} component={RouterLink} to={"https://github.com/real-acmkan/htb_bot"}>View On Github</Button>
                     </Grid>
                     <Grid item md={6} xs={12} padding={3}>
                         <Typography variant="h5" fontWeight="bold">Creator</Typography>
-                        <Typography variant="body2" marginTop={2} marginBottom={2}>HTB Updates was created by Et3rnos.</Typography>
-                        <Button variant="outlined" color="info" startIcon={<i className="fab fa-patreon"></i>}>Support me on Patreon</Button>
+                        <Typography variant="body2" marginTop={2} marginBottom={2}>HTB Updates was originally created by Et3rnos.</Typography>
                     </Grid>
                 </Grid>
             </Grid>

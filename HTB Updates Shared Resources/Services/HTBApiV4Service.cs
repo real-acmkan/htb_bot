@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+//using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -28,8 +28,8 @@ namespace HTB_Updates_Shared_Resources.Services
 
     public class HTBApiV4Service : IHTBApiV4Service
     {
-        private static JwtSecurityToken token;
-        private static DateTime tokenGenerationTime;
+        //private static JwtSecurityToken token;
+        //private static DateTime tokenGenerationTime;
         private readonly IConfigurationRoot _configuration;
 
         public HTBApiV4Service(IServiceProvider serviceProvider)
@@ -37,24 +37,24 @@ namespace HTB_Updates_Shared_Resources.Services
             _configuration = serviceProvider.GetRequiredService<IConfigurationRoot>();
         }
 
-        private async Task FillApiToken()
-        {
-            if (DateTime.Now.Subtract(tokenGenerationTime).TotalMinutes < 30)
-                throw new RateLimitingException("The bot attempted to login twice in just 30 minutes");
-            tokenGenerationTime = DateTime.Now;
+        // private async Task FillApiToken()
+        // {
+        //     if (DateTime.Now.Subtract(tokenGenerationTime).TotalMinutes < 30)
+        //         throw new RateLimitingException("The bot attempted to login twice in just 30 minutes");
+        //     tokenGenerationTime = DateTime.Now;
 
-            var client = new HttpClient();
-            var content = new FormUrlEncodedContent(
-                new Dictionary<string, string> {
-                    { "email", _configuration.GetValue<string>("HTBUsername") },
-                    { "password", _configuration.GetValue<string>("HTBPassword") },
-                    { "remember", "true" }
-                }
-            );
-            var response = await client.PostAsync("https://www.hackthebox.com/api/v4/login", content);
-            dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
-            token = new JwtSecurityToken((string)json.message?.access_token);
-        }
+        //     var client = new HttpClient();
+        //     var content = new FormUrlEncodedContent(
+        //         new Dictionary<string, string> {
+        //             { "email", _configuration.GetValue<string>("HTBUsername") },
+        //             { "password", _configuration.GetValue<string>("HTBPassword") },
+        //             { "remember", "true" }
+        //         }
+        //     );
+        //     var response = await client.PostAsync("https://www.hackthebox.com/api/v4/login", content);
+        //     dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+        //     token = new JwtSecurityToken((string)json.message?.access_token);
+        // }
 
         public async Task<List<UnreleasedMachine>> GetUnreleasedMachines()
         {
@@ -85,14 +85,8 @@ namespace HTB_Updates_Shared_Resources.Services
         {
             var client = new HttpClient(new HttpClientHandler { AllowAutoRedirect = false });
             
-            if (token != null) client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.RawData);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _configuration.GetValue<string>("V1ApiToken"));
             var response = await client.GetAsync(url);
-
-            if (response.StatusCode == HttpStatusCode.Redirect)
-            {
-                await FillApiToken();
-                return await MakeApiCall(url);
-            }
 
             return await response.Content.ReadAsStringAsync();
         }

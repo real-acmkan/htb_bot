@@ -94,7 +94,7 @@ namespace HTB_Updates_Discord_Bot
 
             await _client.LoginAsync(TokenType.Bot, configuration.GetValue<string>("Token"));
             await _client.StartAsync();
-            await _client.SetGameAsync("h.help | htbupdates.com", type: ActivityType.Playing);
+            await _client.SetGameAsync("h.help | https://github.com/real-acmkan/htb_bot", type: ActivityType.Playing);
 
             await Task.Delay(Timeout.Infinite);
         }
@@ -185,7 +185,7 @@ namespace HTB_Updates_Discord_Bot
 
             var eb = new EmbedBuilder { Color = Color.DarkGreen };
             eb.WithTitle($"Welcome to {Format.Sanitize(user.Guild.Name)}");
-            eb.WithDescription($"This bot announces your HackTheBox solves in real-time.\nAll your have to do is send the following message in the server:\n\n`h.link <your_htb_username>`\n\nSolves are announced in <#{guild.ChannelId}>\nFor more information please check <https://htbupdates.com>");
+            eb.WithDescription($"This bot announces your HackTheBox solves in real-time.\nAll your have to do is send the following message in the server:\n\n`h.link <your_htb_username>`\n\nSolves are announced in <#{guild.ChannelId}>\nFor more information please check <https://github.com/real-acmkan/htb_bot>");
             await user.SendMessageAsync(embed: eb.Build());
         }
     }

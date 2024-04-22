@@ -1,6 +1,17 @@
 version: '3.4'
 
 services:
+  db:
+    image: mysql:latest
+    container_name: mysqldb
+    environment:
+      MYSQL_ROOT_PASSWORD: <changeme>
+      MYSQL_DATABASE: htb
+      MYSQL_USER: htb
+      MYSQL_PASSWORD: <changeme>
+    restart: always
+    ports:
+      - 127.0.0.1:3306:3306
   htbupdatesdiscordbot:
     image: htbupdatesdiscordbot
     build:
@@ -13,7 +24,7 @@ services:
       context: .
       dockerfile: htb_updates_frontend/Dockerfile
     ports:
-      - 8080:80
+      - 127.0.0.1:8000:80
     restart: always
   htbupdatesbackend:
     image: htbupdatesbackend

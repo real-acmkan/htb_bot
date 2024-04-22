@@ -127,7 +127,7 @@ namespace HTB_Updates_Discord_Bot.Modules
 
             //Update the temporary message with the successful message
             eb.WithTitle("Account Successfully Linked");
-            eb.WithDescription($"{Context.User.Mention}, you are now linked to the HTB user named \"{htbUser.Username}\".\n");
+            eb.WithDescription($"{Context.User.Mention}, you are now linked to the HTB user named \"{htbUser.Username}\".\nConsider verifying your HTB account by messaging me `h.verify <account_identifier>`.\nPlease note that your new solves may take up to 10 minutes to be announced.");
             await msg.ModifyAsync(x => x.Embed = eb.Build());
         }
 
@@ -140,12 +140,12 @@ namespace HTB_Updates_Discord_Bot.Modules
             var eb = new EmbedBuilder();
             eb.WithColor(Color.DarkGreen);
 
-            var htbId = -1;
+            var htbId = await _htbApiV1Service.GetHTBIdByAccountId(accountId);
 
             if (htbId == -1)
             {
                 eb.WithTitle("Verify Error");
-                eb.WithDescription($"<@{Context.User.Id}>, verification is no longer possible due to changes in the HTB API. No action is needed, your account has been linked!");
+                eb.WithDescription($"<@{Context.User.Id}>, looks like the account identifier you provided is invalid.");
                 await ReplyAsync(embed: eb.Build());
                 return;
             }

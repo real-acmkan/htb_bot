@@ -1,32 +1,23 @@
 # HTB Updates
 
-A Discord bot that announces your members' Hack The Box solves.
+A Discord bot that announces your members Hack The Box solves.
 
-There are 2 ways to use this bot: you can either invite it to your discord server or you can create your own instance of it.
+This is a continuation of the original project by `https://github.com/Et3rnos/HTB_Updates`. Refactoring the code is currently a WIP.
 
-## Invite the bot
-
-To invite this bot to your server all you need to do is visit this link:
-
-[https://discord.com/api/oauth2/authorize?client_id=806824180074938419&permissions=2048&scope=bot](https://discord.com/api/oauth2/authorize?client_id=806824180074938419&permissions=2048&scope=bot)
+There are 2 steps to setup up this bot: creating your own instance of it and then inviting it to your server.
 
 ## Creating your own instance
 
-To create your own instance you need to follow some certain steps.
-
-This guide will assume you have a discord bot and a MySQL server already set up.
-
 ### Clone this repository
 
-Just run `git clone https://github.com/Et3rnos/HTB_Updates`.
+Just run `git clone https://github.com/real-acmkan/htb_bot`.
 
 ### Creating the configuration
 
-There are 2 configuration files that you must create, one for the discord bot application and the other for the website backend (if you plan on using it).
+There are 3 configuration files that you must edit: the docker-compose.yml, the appsettings.json configuration for the discord bot and the appsettings.json for the website backend.
 
-Templates for these files can be found at `./HTB Updates Discord Bot/appsettings.json.sample` and `./htb_updates_backend/appsettings.json.sample`.
+These files can be found at `docker-compose.yml` `./HTB Updates Discord Bot/appsettings.json` and `./htb_updates_backend/appsettings.json`.
 
-You can simply modify them and rename them to `appsettings.json` afterwards.
 
 ### Launching the application
 
@@ -34,6 +25,13 @@ This step requires you to have docker installed.
 
 Simply run `docker compose up -d`.
 
-## Support Me
+The frontend will be available on `127.0.0.1:8000` so you can set up a reverse proxy in front of it.
 
-Want to support the development of this project? Consider supporting me at [https://patreon.com/et3rnos](https://patreon.com/et3rnos).
+__This is the recommended setup as you should manage your domain/SSL certs outside of the docker container__. 
+
+
+## Invite the bot
+
+To invite the bot to your server all you need to do is follow modify the link below once you have set things up with discord:
+
+`https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=2048&scope=bot`
